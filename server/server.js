@@ -10,6 +10,15 @@ const io = socketIO(server);
 io.on("connection", socket => {
     console.log("User connected");
 
+    socket.on("createMessage", payload => {
+        console.log(payload);
+        io.emit("newMessage", {
+            from: payload.from,
+            text: payload.text,
+            createdAt: new Date().getTime()
+        });
+    });
+
     socket.on("disconnect", () => {
         console.log("User disconnected");
     });
