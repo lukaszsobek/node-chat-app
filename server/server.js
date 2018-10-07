@@ -7,16 +7,20 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
+const { makeMessage } = require("./utils/messages");
+
 io.on("connection", socket => {
     console.log("User connected");
 
-    socket.on("createMessage", payload => {
-        console.log(payload);
-        io.emit("newMessage", {
-            from: payload.from,
-            text: payload.text,
-            createdAt: new Date().getTime()
-        });
+    const welcomeMessage = makeMessage("Server", "Welcome to the server");
+    socket.emit("welcomeMessage", welcomeMessage );
+
+    const joinedMessage = makeMessage("Server", "A new user joined");
+    socket.broadcast.emit("newMessage", joinedMessage);
+
+    socket.on("createMessage", ({ from, text }) => {
+        const chatMessage = makeMessage(from, text);
+        io.emit("newMessage", chatMessage);
     });
 
     socket.on("disconnect", () => {
