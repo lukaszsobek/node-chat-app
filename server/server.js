@@ -18,9 +18,10 @@ io.on("connection", socket => {
     const joinedMessage = makeMessage("Server", "A new user joined");
     socket.broadcast.emit("newMessage", joinedMessage);
 
-    socket.on("createMessage", ({ from, text }) => {
+    socket.on("createMessage", ({ from, text }, cb ) => {
         const chatMessage = makeMessage(from, text);
         io.emit("newMessage", chatMessage);
+        cb();
     });
 
     socket.on("disconnect", () => {
