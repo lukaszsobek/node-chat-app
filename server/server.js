@@ -8,14 +8,15 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 const { makeMessage } = require("./utils/messages");
+const { MSG } = require("./constants/messages");
 
 io.on("connection", socket => {
-    console.log("User connected");
+    console.log(MSG.SERVER.USER_CONNECTION);
 
-    const welcomeMessage = makeMessage("Server", "Welcome to the server");
+    const welcomeMessage = makeMessage("Server", MSG.SERVER.USER_WELCOME);
     socket.emit("welcomeMessage", welcomeMessage );
 
-    const joinedMessage = makeMessage("Server", "A new user joined");
+    const joinedMessage = makeMessage("Server", MSG.SERVER.USER_JOINED);
     socket.broadcast.emit("newMessage", joinedMessage);
 
     socket.on("createMessage", ({ from, text }, cb ) => {
@@ -25,7 +26,7 @@ io.on("connection", socket => {
     });
 
     socket.on("disconnect", () => {
-        console.log("User disconnected");
+        console.log(MSG.SERVER.USER_DISCONNECT);
     });
 });
 
@@ -39,5 +40,5 @@ app.get("/", (req, res) => {
 });
 
 server.listen(port, () => {
-    console.log(`Running server on port ${port} ...`);
+    console.log(MSG.SERVER.RUNNING(port));
 });
