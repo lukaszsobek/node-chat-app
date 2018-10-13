@@ -7,9 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-const { makeMessage } = require("./utils/messages");
-const { MSG } = require("./constants/message_strings");
-const { type } = require("./constants/event_types");
+const { makeMessage } = require("./utils");
+const { MSG, type } = require("./constants");
 
 io.on(type.connection, socket => {
     console.log(MSG.SERVER.USER_CONNECTION);
