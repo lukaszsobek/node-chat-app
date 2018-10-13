@@ -8,24 +8,25 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 const { makeMessage } = require("./utils/messages");
-const { MSG } = require("./constants/messages");
+const { MSG } = require("./constants/message_strings");
+const { type } = require("./constants/event_types");
 
-io.on("connection", socket => {
+io.on(type.connection, socket => {
     console.log(MSG.SERVER.USER_CONNECTION);
 
     const welcomeMessage = makeMessage("Server", MSG.SERVER.USER_WELCOME);
-    socket.emit("welcomeMessage", welcomeMessage );
+    socket.emit(type.welcomeMessage, welcomeMessage );
 
     const joinedMessage = makeMessage("Server", MSG.SERVER.USER_JOINED);
-    socket.broadcast.emit("newMessage", joinedMessage);
+    socket.broadcast.emit(type.newMessage, joinedMessage);
 
-    socket.on("createMessage", ({ from, text }, cb ) => {
+    socket.on(type.createMessage, ({ from, text }, cb ) => {
         const chatMessage = makeMessage(from, text);
-        io.emit("newMessage", chatMessage);
+        io.emit(type.newMessage, chatMessage);
         cb();
     });
 
-    socket.on("disconnect", () => {
+    socket.on(type.disconnect, () => {
         console.log(MSG.SERVER.USER_DISCONNECT);
     });
 });
