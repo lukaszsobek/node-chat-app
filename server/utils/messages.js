@@ -6,4 +6,19 @@ const makeMessage = (from, text) => ({
     createdAt: makeDate()
 });
 
-module.exports = { makeMessage };
+const makeLocationLinkMessage = (from, coords) => {
+    const googleMapsLink =
+        "https://www.google.com/maps/place/"
+        + coords.latitude + "/" + coords.longitude;
+
+    return {
+        from,
+        locationUrl: encodeURI(googleMapsLink),
+        createdAt: makeDate()
+    };
+};
+     
+module.exports = {
+    makeLocationLinkMessage,
+    makeMessage
+};

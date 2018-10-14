@@ -1,5 +1,6 @@
-const { makeMessage } = require("./messages");
+const { makeLocationLinkMessage, makeMessage } = require("./messages");
 
 module.exports = { 
+    makeLocationLinkMessage,
     makeMessage
 };

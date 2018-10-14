@@ -7,7 +7,10 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-const { makeMessage } = require("./utils");
+const {
+    makeLocationLinkMessage,
+    makeMessage
+} = require("./utils");
 const { MSG, type } = require("./constants");
 
 io.on(type.connection, socket => {
@@ -18,6 +21,17 @@ io.on(type.connection, socket => {
 
     const joinedMessage = makeMessage("Server", MSG.SERVER.USER_JOINED);
     socket.broadcast.emit(type.newMessage, joinedMessage);
+
+    socket.on(type.geolocationMessage, (location) => {
+        const from = "Hello";
+      
+        const locationMessage = makeLocationLinkMessage(
+            from,
+            location
+        );
+
+        io.emit(type.newLocationMessage, locationMessage);
+    });
 
     socket.on(type.createMessage, ({ from, text }, cb ) => {
         const chatMessage = makeMessage(from, text);

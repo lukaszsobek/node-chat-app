@@ -19,6 +19,16 @@ socket.on("newMessage", function(payload) {
     document.body.appendChild(messageContainer);
 });
 
+socket.on("newLocationMessage", function(payload) {
+    console.log("New location message", payload);
+    const messageContainer = document.createElement("p");
+
+    messageContainer.innerHTML = 
+        `${payload.from}: <a target="_blank" href="${payload.locationUrl}">My location</a>`;
+
+    document.body.appendChild(messageContainer);
+});
+
 socket.on("disconnect", function () {
     console.log("Disconnected from server");
 });
@@ -42,19 +52,16 @@ messageForm.addEventListener("submit", function (e) {
     });
 });
 
-
-
 if( "geolocation" in navigator) {
     const locationButton = document.querySelector(".locationButton");
     locationButton.addEventListener("click", function(e) {
-        const locationObj = {};
 
         navigator.geolocation.getCurrentPosition(function(position) {
-            locationObj.latitude = position.coords.latitude;
-            locationObj.longitude = position.coords.longitude;
+            socket.emit("geolocationMessage", {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            });
         });
-
-        socket.emit("geolocationMessage", locationObj);
     });
 
     
