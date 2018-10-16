@@ -1,4 +1,5 @@
 const socket = io();
+const msgListContainer = document.querySelector(".chat-page__messages");
 
 socket.on("connect", function () {
     console.log("Connected to server");
@@ -8,7 +9,7 @@ socket.on("welcomeMessage", function(payload) {
     const messageContainer = document.createElement("p");
     messageContainer.innerText = payload.from + ": " + payload.text;
 
-    document.body.appendChild(messageContainer);    
+    msgListContainer.appendChild(messageContainer);    
 });
 
 socket.on("newMessage", function(payload) {
@@ -16,7 +17,7 @@ socket.on("newMessage", function(payload) {
     const messageContainer = document.createElement("p");
     messageContainer.innerText = payload.from + ": " + payload.text;
 
-    document.body.appendChild(messageContainer);
+    msgListContainer.appendChild(messageContainer);
 });
 
 socket.on("newLocationMessage", function(payload) {
@@ -33,12 +34,13 @@ socket.on("disconnect", function () {
     console.log("Disconnected from server");
 });
 
-const messageForm = document.querySelector(".messageForm");
+const messageForm = document.querySelector(".form-container__message-form");
 messageForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const msgFrom = "client";
-    const msgText = messageForm.elements["message"].value.trim();
+    const msgText = messageForm
+        .elements["message-form__input"].value.trim();
 
     if(!msgText) {
         return;
@@ -53,10 +55,17 @@ messageForm.addEventListener("submit", function (e) {
 });
 
 if( "geolocation" in navigator) {
-    const locationButton = document.querySelector(".locationButton");
-    locationButton.addEventListener("click", function(e) {
+    const locationButton = document.querySelector(".form-container__location-btn");
+    const locationButtonText = locationButton.innerText;
+
+    locationButton.addEventListener("click", function() {
+        locationButton.innerText = "...";
+        locationButton.disabled = true;
 
         navigator.geolocation.getCurrentPosition(function(position) {
+            locationButton.innerText = locationButtonText;
+            locationButton.disabled = false;
+
             socket.emit("geolocationMessage", {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude
