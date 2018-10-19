@@ -1,31 +1,35 @@
 const socket = io();
 const msgListContainer = document.querySelector(".chat-page__messages");
 
+function makeTime(createdAt) {
+    return moment(createdAt).format("HH:mm");
+}
+
 socket.on("connect", function () {
     console.log("Connected to server");
 });
 
 socket.on("welcomeMessage", function(payload) {
     const messageContainer = document.createElement("p");
-    messageContainer.innerText = payload.from + ": " + payload.text;
+    messageContainer.innerText = makeTime(payload.createdAt) + " - " + payload.from + ": " + payload.text;
 
     msgListContainer.appendChild(messageContainer);    
 });
 
 socket.on("newMessage", function(payload) {
-    console.log("New message", payload);
+    // console.log("New message", payload);
     const messageContainer = document.createElement("p");
-    messageContainer.innerText = payload.from + ": " + payload.text;
+    messageContainer.innerText = makeTime(payload.createdAt) + " - " + payload.from + ": " + payload.text;
 
     msgListContainer.appendChild(messageContainer);
 });
 
 socket.on("newLocationMessage", function(payload) {
-    console.log("New location message", payload);
+    // console.log("New location message", payload);
     const messageContainer = document.createElement("p");
 
     messageContainer.innerHTML = 
-        `${payload.from}: <a target="_blank" href="${payload.locationUrl}">My location</a>`;
+        `${makeTime(payload.createdAt)} - ${payload.from}: <a target="_blank" href="${payload.locationUrl}">My location</a>`;
 
     document.body.appendChild(messageContainer);
 });
