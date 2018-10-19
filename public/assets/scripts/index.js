@@ -50,7 +50,7 @@ messageForm.addEventListener("submit", function (e) {
         from: msgFrom,
         text: msgText
     }, function() {
-        messageForm.elements["message"].value = "";
+        messageForm.elements["message-form__input"].value = "";
     });
 });
 
