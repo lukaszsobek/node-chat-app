@@ -10,10 +10,8 @@ socket.on("connect", function () {
 });
 
 socket.on("welcomeMessage", function(payload) {
-    const messageContainer = document.createElement("p");
-    messageContainer.innerText = makeTime(payload.createdAt) + " - " + payload.from + ": " + payload.text;
-
-    msgListContainer.appendChild(messageContainer);    
+    const welcomeMessageNode = makeNewMessageHTML(payload);
+    msgListContainer.appendChild(welcomeMessageNode);    
 });
 
 socket.on("newMessage", function(payload) {
