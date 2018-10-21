@@ -17,11 +17,8 @@ socket.on("welcomeMessage", function(payload) {
 });
 
 socket.on("newMessage", function(payload) {
-    // console.log("New message", payload);
-    const messageContainer = document.createElement("p");
-    messageContainer.innerText = makeTime(payload.createdAt) + " - " + payload.from + ": " + payload.text;
-
-    msgListContainer.appendChild(messageContainer);
+    const messageNode = makeNewMessageHTML(payload);
+    msgListContainer.appendChild(messageNode);
 });
 
 socket.on("newLocationMessage", function(payload) {
