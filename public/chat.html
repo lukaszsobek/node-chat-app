@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat app</title>
+    <link rel="stylesheet" rel="stylesheet"  href="assets/styles/styles.css">
+</head>
+<body class="chat-page">
+
+    <div class="chat-page__sidebar"></div>
+
+    <div class="chat-page__messages"></div>
+
+    <div class="chat-page__form-container">
+        <form class="form-container__message-form" name="form-container__message-form">
+            <input
+                type="text"
+                name="message-form__input"
+                class="message-form__input"
+                placeholder="Enter message..."
+                autofocus
+                autocomplete="off"
+            >
+            <button class="message-form__submit">Send</button>
+        </form>
+        <button class="form-container__location-btn">Get location</button>
+    </div>
+
+    <script id="msg-template" type="text/template">
+        <p>Test</p>
+    </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/assets/scripts/html.js"></script>
+    <script src="/assets/scripts/chat.js"></script>
+    <script src="/assets/scripts/moment.js"></script>
+</body>
+</html>
