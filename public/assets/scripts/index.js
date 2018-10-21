@@ -22,13 +22,8 @@ socket.on("newMessage", function(payload) {
 });
 
 socket.on("newLocationMessage", function(payload) {
-    // console.log("New location message", payload);
-    const messageContainer = document.createElement("p");
-
-    messageContainer.innerHTML = 
-        `${makeTime(payload.createdAt)} - ${payload.from}: <a target="_blank" href="${payload.locationUrl}">My location</a>`;
-
-    document.body.appendChild(messageContainer);
+    const locationMessageNode = makeLocationMessageHTML(payload);
+    msgListContainer.appendChild(locationMessageNode);
 });
 
 socket.on("disconnect", function () {

@@ -12,6 +12,17 @@ function makeNewMessageHTML(props) {
     return messageContainer;
 }
 
-module.exports = {
-    newMessageHTML
-};
+function makeLocationMessageHTML(props) {
+        if(!props.from || !props.createdAt || !props.locationUrl) {
+            return;
+        }
+
+        const linkText = "My location";
+
+        // console.log("New location message", payload);
+        const messageContainer = document.createElement("p");
+        messageContainer.innerHTML = 
+        `${makeTime(props.createdAt)} - ${props.from}: <a target="_blank" href="${props.locationUrl}">${linkText}</a>`;
+
+        return messageContainer;
+}
