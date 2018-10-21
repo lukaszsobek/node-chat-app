@@ -1,10 +1,6 @@
 const socket = io();
 const msgListContainer = document.querySelector(".chat-page__messages");
 
-function makeTime(createdAt) {
-    return moment(createdAt).format("HH:mm");
-}
-
 socket.on("connect", function () {
     console.log("Connected to server");
 });
@@ -66,8 +62,5 @@ if( "geolocation" in navigator) {
             });
         });
     });
-
-    
-
 }
 
