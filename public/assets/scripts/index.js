@@ -3,6 +3,26 @@ const msgListContainer = document.querySelector(".chat-page__messages");
 const locationButton = document.querySelector(".form-container__location-btn");
 const messageForm = document.querySelector(".form-container__message-form");
 
+function scrollToBottom() {
+    const clientHeight = msgListContainer.clientHeight;
+    const scrollTop = msgListContainer.scrollTop;
+    const scrollHeight = msgListContainer.scrollHeight;
+
+    const lastChild = msgListContainer.lastChild;
+    const lastChildHeight = lastChild.innerHeight;
+    const lastButOneChildHeight = lastChild.previousSibling.innerHeight;
+
+    const totalHeight = 
+        clientHeight 
+        + scrollTop 
+        + lastChildHeight
+        + lastButOneChildHeight;
+
+    if(totalHeight >= scrollHeight) {
+        console.log("Triggered");
+    }
+}
+
 socket.on("connect", function() {
     console.log("Connected to server");
 });
@@ -15,11 +35,13 @@ socket.on("welcomeMessage", function(payload) {
 socket.on("newMessage", function(payload) {
     const messageNode = makeNewMessageHTML(payload);
     msgListContainer.appendChild(messageNode);
+    scrollToBottom();
 });
 
 socket.on("newLocationMessage", function(payload) {
     const locationMessageNode = makeLocationMessageHTML(payload);
     msgListContainer.appendChild(locationMessageNode);
+    scrollToBottom();
 });
 
 socket.on("disconnect", function () {
