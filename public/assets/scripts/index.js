@@ -1,7 +1,9 @@
 const socket = io();
 const msgListContainer = document.querySelector(".chat-page__messages");
+const locationButton = document.querySelector(".form-container__location-btn");
+const messageForm = document.querySelector(".form-container__message-form");
 
-socket.on("connect", function () {
+socket.on("connect", function() {
     console.log("Connected to server");
 });
 
@@ -24,7 +26,6 @@ socket.on("disconnect", function () {
     console.log("Disconnected from server");
 });
 
-const messageForm = document.querySelector(".form-container__message-form");
 messageForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -44,8 +45,9 @@ messageForm.addEventListener("submit", function (e) {
     });
 });
 
-if( "geolocation" in navigator) {
-    const locationButton = document.querySelector(".form-container__location-btn");
+if(!"geolocation" in navigator) {
+    locationButton.disabled = true;
+} else {
     const locationButtonText = locationButton.innerText;
 
     locationButton.addEventListener("click", function() {
@@ -63,4 +65,3 @@ if( "geolocation" in navigator) {
         });
     });
 }
-
