@@ -25,6 +25,11 @@ function scrollToBottom() {
 
 socket.on("connect", function() {
     console.log("Connected to server");
+    const urlParams = urlDestructure();
+    const user = urlParams.searchparams.get("user");
+    const room = urlParams.searchparams.get("room");
+
+    console.log(user,room);
 });
 
 socket.on("welcomeMessage", function(payload) {
