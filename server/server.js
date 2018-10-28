@@ -15,14 +15,6 @@ const {
 const { MSG, type } = require("./constants");
 
 io.on(type.connection, socket => {
-    console.log(MSG.SERVER.USER_CONNECTION);
-
-    const welcomeMessage = makeMessage("Server", MSG.SERVER.USER_WELCOME);
-    socket.emit(type.welcomeMessage, welcomeMessage );
-
-    const joinedMessage = makeMessage("Server", MSG.SERVER.USER_JOINED);
-    socket.broadcast.emit(type.newMessage, joinedMessage);
-
     socket.on(type.geolocationMessage, (location) => {
         const from = "Hello";
       
@@ -46,6 +38,15 @@ io.on(type.connection, socket => {
             : "";
         
         cb(msg);
+
+        socket.join(room);
+        console.log(`${MSG.SERVER.USER_CONNECTION} to room "${room}"`);
+
+        const welcomeMessage = makeMessage("Server", MSG.SERVER.USER_WELCOME);
+        socket.emit(type.welcomeMessage, welcomeMessage );
+    
+        const joinedMessage = makeMessage("Server", `${MSG.SERVER.USER_JOINED} - ${user}`);
+        socket.broadcast.to(room).emit(type.newMessage, joinedMessage);
     });
 
     socket.on(type.disconnect, () => {
