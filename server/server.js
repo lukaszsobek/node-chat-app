@@ -40,8 +40,12 @@ io.on(type.connection, socket => {
         cb();
     });
 
-    socket.on(type.join, (params, cb) => {
-        console.log(params);
+    socket.on(type.join, ({ user, room }, cb) => {
+        const msg = (!isValidString(user) || !isValidString(room))
+            ? MSG.ERR.INVALID_ROOM_USER
+            : "";
+        
+        cb(msg);
     });
 
     socket.on(type.disconnect, () => {

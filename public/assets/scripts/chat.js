@@ -29,7 +29,13 @@ socket.on("connect", function() {
     const user = urlParams.searchparams.get("user");
     const room = urlParams.searchparams.get("room");
 
-    console.log(user,room);
+    socket.emit("join", { user, room }, function(err) {
+        if(err) {
+            window.location.href = "/";
+            return;
+        }
+
+    });
 });
 
 socket.on("welcomeMessage", function(payload) {

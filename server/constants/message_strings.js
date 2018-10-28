@@ -9,4 +9,8 @@ MSG.SERVER = {
     RUNNING: port => `Running server on port ${port}`
 };
 
+MSG.ERR = {
+    INVALID_ROOM_USER: "User and room name need to be valid"
+};
+
 module.exports = { MSG };
