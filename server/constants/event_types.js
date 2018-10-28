@@ -5,8 +5,9 @@ const type = {
     geolocationMessage: "geolocationMessage",
     disconnect: "disconnect",
     createMessage: "createMessage",
-    connection: "connection"
-    
+    connection: "connection",
+    join: "join"
+
 };
 
 module.exports = { type };

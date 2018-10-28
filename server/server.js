@@ -8,6 +8,7 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 const {
+    isValidString,
     makeLocationLinkMessage,
     makeMessage
 } = require("./utils");
@@ -37,6 +38,10 @@ io.on(type.connection, socket => {
         const chatMessage = makeMessage(from, text);
         io.emit(type.newMessage, chatMessage);
         cb();
+    });
+
+    socket.on(type.join, (params, cb) => {
+        console.log(params);
     });
 
     socket.on(type.disconnect, () => {
