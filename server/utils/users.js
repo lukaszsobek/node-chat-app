@@ -14,6 +14,10 @@ class Users {
         return this.userList.find(user => user.socketId === id);
     }
 
+    getRoomUserList(room) {
+        return this.userList.filter(user => user.room === room);
+    }
+
 }
 
 module.exports = {
