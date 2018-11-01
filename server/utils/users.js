@@ -9,6 +9,11 @@ class Users {
         this.userList.push(newUser);
         return newUser;
     }
+
+    getUser(id) {
+        return this.userList.find(user => user.socketId === id);
+    }
+
 }
 
 module.exports = {
