@@ -43,6 +43,10 @@ socket.on("welcomeMessage", function(payload) {
     msgListContainer.appendChild(welcomeMessageNode);    
 });
 
+socket.on("userListChange", function(userList) {
+    console.log(userList);
+});
+
 socket.on("newMessage", function(payload) {
     const messageNode = makeNewMessageHTML(payload);
     msgListContainer.appendChild(messageNode);

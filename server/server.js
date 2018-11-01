@@ -7,12 +7,15 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
+const { Users } = require("./utils/users");
 const {
     isValidString,
     makeLocationLinkMessage,
     makeMessage
 } = require("./utils");
 const { MSG, type } = require("./constants");
+
+const users = new Users();
 
 io.on(type.connection, socket => {
     socket.on(type.geolocationMessage, (location) => {
@@ -40,6 +43,11 @@ io.on(type.connection, socket => {
         cb(msg);
 
         socket.join(room);
+
+        users.addUser(socket.id, user, room);
+        const usersInRoom = users.getRoomUserList(room);
+        socket.to(room).emit(type.userListChange, usersInRoom);
+
         console.log(`${MSG.SERVER.USER_CONNECTION} to room "${room}"`);
 
         const welcomeMessage = makeMessage("Server", MSG.SERVER.USER_WELCOME);

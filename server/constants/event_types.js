@@ -6,7 +6,8 @@ const type = {
     disconnect: "disconnect",
     createMessage: "createMessage",
     connection: "connection",
-    join: "join"
+    join: "join",
+    userListChange: "userListChange"
 
 };
 
