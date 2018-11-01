@@ -2,16 +2,10 @@ const { Users } = require("../users");
 
 describe("Users class", () => {
     it(".addUser() creates a new user besed on params", () => {
-        const testUser = {
-            socketId: 1,
-            userName: 1,
-            room: 1
-        };
+        const testUser = { socketId: 1, userName: 1, room: 1 };
 
         const users = new Users();
-        const addedUser = users.addUser(
-            testUser.socketId, testUser.userName, testUser.room
-        );
+        const addedUser = users.addUser(1, 1, 1);
         
         expect(addedUser).toEqual(testUser);
         expect(users.userList.length).toBe(1);
