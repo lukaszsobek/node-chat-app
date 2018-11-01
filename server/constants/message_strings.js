@@ -5,6 +5,7 @@ MSG.SERVER = {
     USER_JOINED: "New user joined",
     USER_CONNECTION: "New user connected",
     USER_DISCONNECT: "User disconnected",
+    USER_LEFT_ROOM: "A user left the room",
 
     RUNNING: port => `Running server on port ${port}`
 };

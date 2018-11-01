@@ -42,11 +42,16 @@ io.on(type.connection, socket => {
         
         cb(msg);
 
+        if(msg) {
+            return;
+        }
+
         socket.join(room);
 
+        users.removeUser(socket.id);
         users.addUser(socket.id, user, room);
         const usersInRoom = users.getRoomUserList(room);
-        socket.to(room).emit(type.userListChange, usersInRoom);
+        io.to(room).emit(type.userListChange, usersInRoom);
 
         console.log(`${MSG.SERVER.USER_CONNECTION} to room "${room}"`);
 
@@ -58,6 +63,17 @@ io.on(type.connection, socket => {
     });
 
     socket.on(type.disconnect, () => {
+        const removedUser = users.removeUser(socket.id);
+
+        if(!removedUser) {
+            return;
+        }
+
+        const usersInRoom = users.getRoomUserList(removedUser.room);
+        io.to(removedUser.room).emit(type.userListChange, usersInRoom);
+
+        const leaveMessage = makeMessage("Server", `${MSG.SERVER.USER_LEFT_ROOM} - ${removedUser.userName}`);
+        io.to(removedUser.room).emit(type.newMessage, leaveMessage);
         console.log(MSG.SERVER.USER_DISCONNECT);
     });
 });
