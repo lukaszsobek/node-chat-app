@@ -10,6 +10,14 @@ class Users {
         return newUser;
     }
 
+    removeUser(id) {
+        const thisUser = this.getUser(id);
+        const initialUserCount = this.userList.length;
+        this.userList = this.userList.filter(user => user.socketId !== id);
+
+        return initialUserCount !== this.userList.length ? thisUser : null;
+    }
+
     getUser(id) {
         return this.userList.find(user => user.socketId === id);
     }
