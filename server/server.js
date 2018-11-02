@@ -53,7 +53,7 @@ io.on(type.connection, socket => {
         const usersInRoom = users.getRoomUserList(room);
         io.to(room).emit(type.userListChange, usersInRoom);
 
-        console.log(`${MSG.SERVER.USER_CONNECTION} to room "${room}"`);
+        console.log(MSG.SERVER.USER_JOINED(user, room));
 
         const welcomeMessage = makeMessage("Server", MSG.CLIENT.USER_WELCOME(user, room));
         socket.emit(type.welcomeMessage, welcomeMessage );
