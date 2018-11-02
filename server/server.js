@@ -72,7 +72,7 @@ io.on(type.connection, socket => {
         const usersInRoom = users.getRoomUserList(removedUser.room);
         io.to(removedUser.room).emit(type.userListChange, usersInRoom);
 
-        const leaveMessage = makeMessage("Server", `${MSG.SERVER.USER_LEFT_ROOM} - ${removedUser.userName}`);
+        const leaveMessage = makeMessage("Server", MSG.CLIENT.USER_LEFT(removedUser.userName));
         io.to(removedUser.room).emit(type.newMessage, leaveMessage);
         console.log(MSG.SERVER.USER_DISCONNECT);
     });
