@@ -2,10 +2,9 @@ const MSG = {};
 
 MSG.SERVER = { 
     USER_JOINED: (user, room) => `User "${user}" joined room "${room}".`,
-    USER_DISCONNECT: "User disconnected.",
-    USER_LEFT_ROOM: "A user left the room.",
+    USER_LEFT: (user, room) => `User "${user}" left the room "${room}".`,
 
-    RUNNING: port => `Running server on port ${port}`
+    RUNNING: port => `Running server on port ${port}...`
 };
 
 MSG.CLIENT = {

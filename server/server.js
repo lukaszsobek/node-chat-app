@@ -69,12 +69,15 @@ io.on(type.connection, socket => {
             return;
         }
 
-        const usersInRoom = users.getRoomUserList(removedUser.room);
-        io.to(removedUser.room).emit(type.userListChange, usersInRoom);
+        const { room, userName } = removedUser;
+        const usersInRoom = users.getRoomUserList(room);
 
-        const leaveMessage = makeMessage("Server", MSG.CLIENT.USER_LEFT(removedUser.userName));
-        io.to(removedUser.room).emit(type.newMessage, leaveMessage);
-        console.log(MSG.SERVER.USER_DISCONNECT);
+        io.to(room).emit(type.userListChange, usersInRoom);
+
+        const leaveMessage = makeMessage("Server", MSG.CLIENT.USER_LEFT(userName));
+ 
+        io.to(room).emit(type.newMessage, leaveMessage);
+        console.log(MSG.SERVER.USER_LEFT(userName, room));
     });
 });
 
