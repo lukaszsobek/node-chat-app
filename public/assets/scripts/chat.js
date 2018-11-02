@@ -66,7 +66,6 @@ socket.on("disconnect", function () {
 messageForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const msgFrom = "client";
     const msgText = messageForm
         .elements["message-form__input"].value.trim();
 

@@ -31,9 +31,12 @@ io.on(type.connection, socket => {
 
     socket.on(type.createMessage, (text, cb) => {
         const user = users.getUser(socket.id);
-        const chatMessage = makeMessage(user.userName, text);
-        io.emit(type.newMessage, chatMessage);
-        cb();
+
+        if(user && isValidString(text)) {
+            const chatMessage = makeMessage(user.userName, text);
+            io.to(user.room).emit(type.newMessage, chatMessage);
+            cb();
+        }
     });
 
     socket.on(type.join, ({ user, room }, cb) => {
