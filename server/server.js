@@ -55,7 +55,7 @@ io.on(type.connection, socket => {
 
         console.log(`${MSG.SERVER.USER_CONNECTION} to room "${room}"`);
 
-        const welcomeMessage = makeMessage("Server", MSG.SERVER.USER_WELCOME);
+        const welcomeMessage = makeMessage("Server", MSG.CLIENT.USER_WELCOME(user, room));
         socket.emit(type.welcomeMessage, welcomeMessage );
     
         const joinedMessage = makeMessage("Server", `${MSG.SERVER.USER_JOINED} - ${user}`);
