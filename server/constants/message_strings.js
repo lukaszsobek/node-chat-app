@@ -1,7 +1,6 @@
 const MSG = {};
 
 MSG.SERVER = { 
-    USER_JOINED: "New user joined",
     USER_CONNECTION: "New user connected",
     USER_DISCONNECT: "User disconnected",
     USER_LEFT_ROOM: "A user left the room",
@@ -10,7 +9,8 @@ MSG.SERVER = {
 };
 
 MSG.CLIENT = {
-    USER_WELCOME: (user, room) => `Hi, ${user}! Welcome to room ${room}`
+    USER_WELCOME: (user, room) => `Hi, ${user}! Welcome to room ${room}`,
+    USER_JOINED: (user) => `User ${user} joined the room`,
 };
 
 MSG.ERR = {

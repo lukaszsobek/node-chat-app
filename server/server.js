@@ -58,7 +58,7 @@ io.on(type.connection, socket => {
         const welcomeMessage = makeMessage("Server", MSG.CLIENT.USER_WELCOME(user, room));
         socket.emit(type.welcomeMessage, welcomeMessage );
     
-        const joinedMessage = makeMessage("Server", `${MSG.SERVER.USER_JOINED} - ${user}`);
+        const joinedMessage = makeMessage("Server", MSG.CLIENT.USER_JOINED(user));
         socket.broadcast.to(room).emit(type.newMessage, joinedMessage);
     });
 
