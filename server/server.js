@@ -29,8 +29,9 @@ io.on(type.connection, socket => {
         io.emit(type.newLocationMessage, locationMessage);
     });
 
-    socket.on(type.createMessage, ({ from, text }, cb ) => {
-        const chatMessage = makeMessage(from, text);
+    socket.on(type.createMessage, (text, cb) => {
+        const user = users.getUser(socket.id);
+        const chatMessage = makeMessage(user.userName, text);
         io.emit(type.newMessage, chatMessage);
         cb();
     });

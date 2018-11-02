@@ -74,10 +74,7 @@ messageForm.addEventListener("submit", function (e) {
         return;
     }
 
-    socket.emit("createMessage", {
-        from: msgFrom,
-        text: msgText
-    }, function() {
+    socket.emit("createMessage", msgText, function() {
         messageForm.elements["message-form__input"].value = "";
     });
 });
